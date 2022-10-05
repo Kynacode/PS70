@@ -17,3 +17,25 @@ p {font-size: 16px;}
   margin-left: 15px;
   margin-right: 15px;
 }
+
+.entry-container {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.entry {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 33vw;
+}
+
+.entry img {
+  width: 400px;
+}
+
+.entry a {
+
+}
