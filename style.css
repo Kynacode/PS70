@@ -19,6 +19,7 @@ p {font-size: 16px;}
 }
 
 .entry-container {
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -33,7 +34,7 @@ p {font-size: 16px;}
 }
 
 .entry img {
-  width: 400px;
+  width: 100%
 }
 
 .entry a {
