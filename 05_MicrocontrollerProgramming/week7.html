@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>PS70: Electronic Output Devices </title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../style.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script> 
+
+</head>
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div style="align-items: left; justify-content:left;" class="container-fluid">
+    <h3 class="nav-title"> PS70: Microcontroller Programming</h3>
+    <div class="navbar-nav">
+      <h4></h4>
+      <h4><a class="nav-link" href="../index.html">Home</a></h4>
+      <h4><a class="nav-link" href="../about.html">About</a></h4>
+    </div>
+  </div>
+</nav>
+
+<body>
+
+
+<xmp style="display:none;">
+<br> 
+
+
+#### Week 6: Electronic Output Devices
+
+
+
+This week was an introduction to Electronic Output Devices.
+
+
+
+This week's assignment was to choose an output device and program a microcontroller to operate it. To be honest, I wasn't sure what I wanted to do at first, because we have so many  output devices to choose from. For example buzzer, dc motor, servo motor, and LED. So I decided to use BME/BMP280 as my input device. I also use Adafruit 1.14 240x135 TFT as my output device.
+
+
+  <div class="row">
+    <!-- <div class="col-4">
+      <p><img src="band.gif" alt="this band moves"  width="250" />
+      </ul> </p>
+      </div> -->
+    <div class="col text-center">
+      <img class="mx-auto d-block" src="up6.gif" alt="" style="width:400px;height:500px;">
+    </div>
+  </div>
+</div>
+
+I had to first learn how capacitive sensors work in order to be able to program it. I was able to quickly learn how to program it with the help of the website listed below.
+
+<ul>
+<li> <a href="https://www.eitkw.com/wp-content/uploads/2020/03/Arduino_Projects_Book.pdf"> Arduino Projects Book </a></li>
+<li><a href="https://www.youtube.com/watch?v=fJWR7dBuc18"> Arduino Tutorial 1 </a></li> 
+<li><a href="https://nathanmelenbrink.github.io/ps70/06_input/index.html "> Electronic Input Devices </a></li>
+</ul>
+
+ <p> So for this week I first decided to use a photoresistor that detects the absence of light. A photoresistor is a light-sensitive device most often used to indicate the presence or absence of light or to measure the light intensity. 
+ </p>
+
+
+<h2> Photoresistor</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <p>The photoresistor is a unique kind of semiconductor device, and when the light intensity increases around it, the electrons in the valence shell break their bonds and become free electrons, leading to the creation of holes that allow electricity to flow. The resistor's resistance is often generally high when light intensity is low, preventing any current flow.But when the light intensity rises, current begins to flow, which lowers resistance, and this is how the photoresistor functions.
+
+
+<!--The material I use included:
+
+<ul>
+<li>Arduino board </li>
+<li>Led </li>
+<li>2 220hz Resistor </li>
+<li>Photoresistor </li>
+<li>Flashlight </li>
+<li>Cable cords </li>
+</ul> </p>--->
+      </div>
+    <div class="col-8 text-center">
+      <img class="mx-auto d-block" src="word6.png" alt="Image of my Photoresistor" style="width:500px;height:400px;">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+To build my circuit I followed the example that was given on our course webpage. However, I changed a couple of things about the setup. I added a Led light and program it to light up when the value is over 500. 
+
+
+
+<h2> Material</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <p>
+
+
+The material I use included:
+
+<ul>
+<li>Arduino board </li>
+<li>Led </li>
+<li>2 220hz Resistor </li>
+<li>Photoresistor </li>
+<li>Flashlight </li>
+<li>Cable cords </li>
+<li>Cardboard </li>
+</ul> </p>
+      </div>
+    <div class="col-8 text-center">
+      <img class="mx-auto d-block" src="6655.png" alt="Image of my setup" style="width:700px;height:450px;">
+    </div>
+  </div>
+</div>
+Here is my code down below.
+
+<div class="text-sm bg-light" style="height: 500px; overflow-y: auto;border-style: solid;">
+  <p><pre><code class="language-html">#include  &lt;Servo.h&gt;
+
+int res = 0; /* declaring the variable that will store the value of photoresistor*/
+int sensor =A0;/* assigning Arduino pin for photoresistor*/
+int led= 5;/* assigning Arduino pin for LED*/
+unsigned long previousMillis = 0;
+int DataTime = 1000;
+void setup() {
+    Serial.begin(9600); /*setting the baud rate for serial communication*/
+    pinMode(5, OUTPUT); /* assigning mode to LED pin */
+}
+
+void loop() 
+{
+    // put your main code here, to run repeatedly:
+    
+   unsigned long currentMillis = millis();
+    
+
+    if((currentMillis - previousMillis) >= DataTime)  // time to update
+    {
+      res = analogRead(sensor); /* getting the value of photoresistor*/
+      /* displaying the photoresistor value on serial monitor */
+      Serial.println(res); 
+
+    if  (res < 500) { /* when the value of sensor is less than 500 */
+        Serial.println(" Low intensity ");
+         Serial.println(res);
+        digitalWrite(led,LOW); /* keep the LED off*/
+
+    }
+    else  {  //(res < 501) /* otherwise turn the light on */
+        Serial.println("High Intensity ");
+        Serial.println(res);
+        digitalWrite(led,HIGH); /* turn the LED on*/
+
+    }
+    
+}
+}
+
+
+</code></pre></p>
+</div>
+
+<h2> My results </h2>
+  
+
+
+
+
+
+
+  </code></pre></p>
+
+
+
+
+</div>
+
+<div class="row">
+    <!-- <div class="col-4">
+      <p><img src="band.gif" alt="this band moves"  width="250" />
+      </ul> </p>
+      </div> -->
+    <div class="col text-center">
+      <img class="mx-auto d-block" src="rewk6.png" alt="" style="width:500px;height:400px;">
+    </div>
+  </div>
+</div>
+
+
+ 
+    
+  ## " Measuring distance "
+  
+         By Shekinah Newson  
+      
+<video width="500px" height="500px" controls> 
+  <source src="week5vid.mp4" type="video/mp4"> 
+</video> 
+
+
+
+
+
+
+
+
+<h2> Transmit-receive sening or tx- tr</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <p> I wasn’t able to get my capacitive touch sensing piano to work properly. However, I still decided to create something that could help me understand how pressure and capacitive sensors work together.For this project I use the transmit-receive sening or tx- tr. I wanted to test the sensitivity flow of electron when pressure is applyed. 
+
+
+
+
+
+<!--The material I use included:
+
+<ul>
+<li>Arduino board </li>
+<li>Led </li>
+<li>2 220hz Resistor </li>
+<li>Photoresistor </li>
+<li>Flashlight </li>
+<li>Cable cords </li>
+</ul> </p>--->
+      </div>
+    <div class="col-8 text-center">
+      <img class="mx-auto d-block" src="qc2.png" alt="Image of my tr" style="width:500px;height:400px;">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <p> <img src="tr.png" alt="Image of extrudewk4" style="width:500px;height:400px;">  
+
+
+
+
+
+<!--The material I use included:
+
+<ul>
+<li>Arduino board </li>
+<li>Led </li>
+<li>2 220hz Resistor </li>
+<li>Photoresistor </li>
+<li>Flashlight </li>
+<li>Cable cords </li>
+</ul> </p>--->
+      </div>
+      <!--<div class="container">--->
+    <div class="mx-auto d-block">
+    <div class="col-9 text-center">
+      <p>Above you will find a image that show an example of what it could look like with its compounds. 
+
+<li>The pin that sends the electrode would be the transmit antenna.
+<li>The yellow box is the material that you would put in between the tx and rx.
+<li>The end that collects the electrode is the receive antenna.
+<li>The Arduino Uno would serve as the detection system.
+<li>Your value will depend on how close the two pieces are in the electric field.
+
+    </div>
+  </div>
+</div>
+
+
+</code></pre></p>
+</div>
+
+<h2> My results </h2>
+  
+
+
+
+
+
+
+  </code></pre></p>
+
+
+
+
+</div>
+
+<div class="row">
+    <!-- <div class="col-4">
+      <p><img src="band.gif" alt="this band moves"  width="250" />
+      </ul> </p>
+      </div> -->
+    <div class="col text-center">
+      <img class="mx-auto d-block" src="rewk6.png" alt="" style="width:500px;height:400px;">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</xmp>
+</body> 
+  <script src="../strapdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+</html>
