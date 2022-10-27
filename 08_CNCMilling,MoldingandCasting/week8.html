@@ -170,7 +170,7 @@ After I save the file on hard drive, I uplode it to this website.(mods.cba.mit.e
 <li>Right click -> Programs -> Open Server Program -> Machines -> Roland mill -> SRM-20 -> mill 2.5D stl </li>
 <li>You should see "socket opened" in the WebSocket device window. The machine should respond to the "move to origin" and "move to home" keys. </li>
 <li>Insert a 1/8" end mill  </li>
-<li>Check units. Does the part seem to be the right size? </li>
+<li>Check units.  </li>
 <li>Select stl file, change settings, and calculate </li>
 <li>Send file to device </li>
 </ul> 
@@ -213,152 +213,74 @@ After I save the file on hard drive, I uplode it to this website.(mods.cba.mit.e
 <br>
 <br>
 
-
-## Here is my code down below.
-
-
-<div class="text-sm bg-light" style="height: 500px; overflow-y: auto;border-style: solid;">
-  <p><pre><code class="language-html">#include  &lt;Servo.h&gt;
-
-
-#include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_ST7735.h> // Hardware-specific library for ST7735
-#include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
-#include <SPI.h>
-
-#include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BME280.h>
-
-#if defined(ARDUINO_FEATHER_ESP32) // Feather Huzzah32
-  #define TFT_CS         14
-  #define TFT_RST        15
-  #define TFT_DC         32
-
-#elif defined(ESP8266)
-  #define TFT_CS         4
-  #define TFT_RST        16                                            
-  #define TFT_DC         5
-
-#else
-  // For the breakout board, you can use any 2 or 3 pins.
-  // These pins will also work for the 1.8" TFT shield.
-  #define TFT_CS        10
-  #define TFT_RST        9 // Or set to -1 and connect to Arduino RESET pin
-  #define TFT_DC         8
-#endif
-
-#define SEALEVELPRESSURE_HPA (1013.25)
-
-// OPTION 1 (recommended) is to use the HARDWARE SPI pins, which are unique
-// to each board and not reassignable. For Arduino Uno: MOSI = pin 11 and
-// SCLK = pin 13. This is the fastest mode of operation and is required if
-// using the breakout board's microSD card.
-
-// For 1.44" and 1.8" TFT with ST7735 use:
-//Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
-
-// For 1.14", 1.3", 1.54", 1.69", and 2.0" TFT with ST7789:
-Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
-// OPTION 2 lets you interface the display using ANY TWO or THREE PINS,
-// tradeoff being that performance is not as fast as hardware SPI above.
-//#define TFT_MOSI 11  // Data out
-//#define TFT_SCLK 13  // Clock out
 
-// For ST7735-based displays, we will use this call
-//Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
-
-// OR for the ST7789-based displays, we will use this call
-//Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
+<br>
 
 
-float p = 3.1415926;
-
-Adafruit_BME280 bme;
-
-void setup(void) {
-  Serial.begin(9600);
-  Serial.print(F("Hello! ST77xx TFT Test"));
-
-  
-
-  if (!bme.begin(0x76)) {
-    Serial.println("Could not find a valid BME280 sensor, check wiring!");
-    while (1);
-  }
 
 
-  // Use this initializer if using a 1.8" TFT screen:
-  // tft.initR(INITR_BLACKTAB);      // Init ST7735S chip, black tab
+<h2>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Casting</h2>
+I wanted to cast it with mental, but the lab was out. So I used OOMOO 25 silicone to cast a silicone mold from the wax mold. I mixed parts A and B together in a 100A:130B ratio as per the instructions on the bottles. It is important to note that I measured the amounts by weight and not volume. 
+<div class="container">
 
-  // OR use this initializer if using a 1.8" TFT screen with offset such as WaveShare:
-  // tft.initR(INITR_GREENTAB);      // Init ST7735S chip, green tab
+  <div class="row">
+    <div class="col-6">
+     
 
-  // OR use this initializer (uncomment) if using a 1.44" TFT:
-  //tft.initR(INITR_144GREENTAB); // Init ST7735R chip, green tab
+      <h2>&nbsp;&nbsp;&nbsp;&nbsp;      Here when i poured it</h2>
+      <img class="mx-auto d-block" src="ss8.png" alt="Image of my Jordan" style="width:400px;height:350px;">
 
-  // OR use this initializer (uncomment) if using a 0.96" 160x80 TFT:
-  //tft.initR(INITR_MINI160x80);  // Init ST7735S mini display
+      </div>
+    <div class="col-5 text-center">
+       <h2> Here my result ! </h2>
+       <p> <img class="mx-auto d-block" src="sss8.png" alt="Image of my jordan2" style="width:400px;height:350px;"> 
 
-  // OR use this initializer (uncomment) if using a 1.3" or 1.54" 240x240 TFT:
-  //tft.init(240, 240);           // Init ST7789 240x240
-
-  // OR use this initializer (uncomment) if using a 1.69" 280x240 TFT:
-  //tft.init(240, 280);           // Init ST7789 280x240
-
-  // OR use this initializer (uncomment) if using a 2.0" 320x240 TFT:
-  //tft.init(240, 320);           // Init ST7789 320x240
-
-  // OR use this initializer (uncomment) if using a 1.14" 240x135 TFT:
-  tft.init(135, 240);           // Init ST7789 240x135
-  
-  // OR use this initializer (uncomment) if using a 1.47" 172x320 TFT:
-  //tft.init(172, 320);           // Init ST7789 172x320
-
-  // SPI speed defaults to SPI_DEFAULT_FREQ defined in the library, you can override it here
-  // Note that speed allowable depends on chip and quality of wiring, if you go too fast, you
-  // may end up with a black screen some times, or all the time.
-  //tft.setSPISpeed(40000000);
-
-  Serial.println(F("Initialized"));
-
-  uint16_t time = millis();
-  tft.fillScreen(ST77XX_BLACK);
-  time = millis() - time;
-
-  Serial.println(time, DEC);
-  //delay(5000);
-  
-
-}
-
-
-</code></pre></p>
+    </div>
+  </div>
 </div>
+
 <br>
 <br>
 <br>
 <br>
-
-<h2> My results </h2>
-  
-
-
-
-
- 
-    
-   "Environment Watch"
+<br>
+<br>
+<h2> Using the Shopbot: </h2>
+I had so much fun using the Shopbot, and I even got a chance to use the Shopbot Buddy that is downstairs in the basement. I wasn't sure at first what I wanted to make, but I knew it would be unique. Sooo, I decided to build an open book shelf that I could use at home. It was my first time doing something like this, but I wasn't scared. The only thing was, I wasn't sure how to design a level shelf.  
 
 
+  <div class="row">
+    <!-- <div class="col-4">
+      <p><img src="band.gif" alt="this band moves"  width="250" />
+      </ul> </p>
+      </div> -->
+    <div class="col text-center">
+      <img class="mx-auto d-block" src="w8888.png" alt="this band moves" style="width:400px;height:500px;">
+    </div>
+  </div>
+</div>
 
+I had to first learn how to us an Arduino board in order to be able to program it. I was able to quickly learn how to program it with the help of the website listed below.
 
-    By Shekinah Newson  
-<video width="700px" height="500px"controls>
-  <source src="week7.mp4" type="video/mp4"> 
- </video> 
+<ul>
+<li> <a href="https://www.eitkw.com/wp-content/uploads/2020/03/Arduino_Projects_Book.pdf"> Arduino Projects Book </a></li>
+<li><a href="https://www.youtube.com/watch?v=fJWR7dBuc18"> Arduino Tutorial 1 </a></li> 
+<li><a href="https://nathanmelenbrink.github.io/ps70/04_arduino/index.html "> Microcontroller Programming </a></li>
+</ul>
+
+ <p>I thought it would be a good idea to sketch out the circuit on my iPad because I wasn't sure where to begin. I originally intended to complete my project with just an Arduino and a motor, but I felt that would be boring. So, to add some pizzazz, I added an LED and other nice components to my circuit to get more practice utilizing them. </p>
 
 <br>
 <br>
