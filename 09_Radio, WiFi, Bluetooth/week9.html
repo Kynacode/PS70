@@ -44,11 +44,11 @@
 <div class="container">
   <div class="row">
     <div class="col-6">
-      <img class="mx-auto d-block" src="wk8pi1.gif" alt="Image of my wk7watch" style="width:450px;height:350px;">
+      <img class="mx-auto d-block" src="week9pic1.gif" alt="Image of my week9pic1" style="width:450px;height:350px;">
 
       </div>
     <div class="col-5 text-center">
-       <h2> Week 9:Radio, WiFi, Bluetooth </h2><p> This week was all about CNC Milling, Molding & Casting.I had so much fun this week. For this week's assignment, we had to do two things.  The first thing we had to do was to design something and make it using CNC (either the ShopBot, the Shaper, or the SRM-20). The second thing was to create something by molding and casting. 
+       <h2> Week 9:Radio, WiFi, Bluetooth </h2><p> This week was all about Radio, WiFi, Bluetooth.I had so much fun this week. For this week's assignment, we had to work with a partner or group of 3. After forming a group we had to program one or more microcontroller(s) to obtain and respond to information from the internet or radio. Our project include at least one input and one output.  I worked with Winter, and our input was BME/BMP280 and the output was DC motor. 
 
     </div>
   </div>
@@ -71,32 +71,22 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <h2> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CNC Machine</h2>
-      <p> Soooo The first machine I use was the CNC. According to our class website, a Computer Numerical Control or CNC is the automated control of machining tools (drills, boring tools, lathes) and 3D printers by means of a computer”. You can use materials such as metal, plastic, wood, ceramic, or even composite. The only thing you have to do is change the size of the bit. You would also need an STL file. An example of bit sizes is down below. You will also use a small bit if you want more detail cut.
+      <h2> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BME/BMP280</h2>
+      <p> Soooo BME280 is an integrated environmental sensor that monitors humidity, pressure, and temperature to provide users with a thorough and comprehensive assessment of the environment. For low power consumption, long-term stability, and strong EMC resistance, an 8-pin metal-lid LGA package was used in its design. This sensor has a quick response time to fulfill performance demands and good accuracy. Additionally, it has been enhanced for performance with minimal noise and great resolution. The BME280 can also measure humidity in addition to temperature and air pressure, but the BMP280 can only monitor temperature and air pressure.
 
 
-    &nbsp;<img class="mx-auto d-block" src="bitsize.png" alt="Image of my cncbitsize" style="width:400px;height:300px;">
     
-<!--The material I use included:
+    
 
-<ul>
-<li>Arduino board </li>
-<li>Led </li>
-<li>2 220hz Resistor </li>
-<li>Photoresistor </li>
-<li>Flashlight </li>
-<li>Cable cords </li>
-</ul> </p>--->
       </div>
     <div class="col-8 text-center">
-       <img class="mx-auto d-block" src="cncwk8.gif" alt="Image of my cnc" style="width:400px;height:300px;">
+      <img class="mx-auto d-block" src="bme28.png" alt="Image of my bme28" style="width:400px;height:300px;">
     </div>
   </div>
 </div>
 
 
-<br>
-<br>
+
 <br>
 <br>
 <br>
@@ -110,9 +100,8 @@
 <div class="container">
   <div class="row">
     <div class="col-6">
-       <img class="mx-auto d-block" src="mjwk8.gif" alt="Image of my Jordan" style="width:400px;height:350px;">
+       <img class="mx-auto d-block" src=" 361.png" alt="Image of my DC motor" style="width:350px;height:350px;">
     
-
 
 <!--The material I use included:
 
@@ -127,11 +116,11 @@
 </ul> </p>--->
       </div>
     <div class="col-5 text-center">
-      <h2>My CNC Project </h2>
-      <p> For my project, I decided to cut out the iconic "Jumpman" logo of Michael Jordan. I grew up watching old videos of Michael Jordan playing, and I thought it would be cool to make a mold of his logo. Click here to download the.STL file.
+      <h2>DC Motor Standard 210 RPM 3 ~ 7.2VDC </h2>
+      <p> A DC motor is an electrical device that transforms electrical energy into mechanical energy. Direct current, which is the electrical energy input in a DC motor, is converted into mechanical motion.
         
         <br>
-        <img class="mx-auto d-block" src="j2wk8.gif" alt="Image of my Jordan" style="width:250px;height:200px;">
+        <!--<img class="mx-auto d-block" src="j2wk8.gif" alt="Image of my Jordan" style="width:250px;height:200px;">--->
 
 
     </div>
@@ -161,160 +150,270 @@
    
       <p>
 
+We thought it would be cool to connect a BME/BMP280 temperature reader to a fan for our week 9 project so that when the temperature exceeds 30 degrees, the fan will turn on. 
+We started off by hooking up the BME280 to firebase, and writing code to transmit their data to the database. I wasn’t sure how to connect it to the firebase. So I had to do some research on how to use firebase. I ended up following the tutorials on the class website and googling esp32 firebase library. After a couple of hours I successfully connected the BME280 to the firebase. I used the following code to build the database structure.
 
-First, I went to Google and downloaded an STL file. Once I downloaded the file, I then imported it into Fusion 360. In Fusion, I had to add a box or you can say a rectangle  and extrude it around the Jumpman. You can see an example of it here.
+<h2> BME/280 Setup in Firebase </h2>
 
-After I save the file on hard drive, I uplode it to this website.(mods.cba.mit.edu)  I use mill 2.5D stl and follow this step down below.
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <p><img class="mx-auto d-block" src="fire.png" alt="Image of Ksetup.png" style="width:400px;height:350px;">
+
+</ul> </p>
+      </div>
+    <div class="col-6 text-center">
+      Here is my code down below.
+
+<div class="text-sm bg-light" style="height: 400px; overflow-y: auto;border-style: solid;">
+  <p><pre><code class="language-html">#include  &lt;Servo.h&gt;
+
+
+
+#include <WiFi.h>                                 // esp32 library
+ 
+const char* ssid     = "MAKERSPACE";
+const char* password = "12345678";
+ 
+WiFiServer server(80);
+#include <FirebaseESP32.h>                        // firebase library
+ 
+#define FIREBASE_HOST "https://week9pj-default-rtdb.firebaseio.com/"   // the project name address from firebase id
+#define FIREBASE_AUTH "x0bHaZrAU879NEvy4p7Cc96jcijFskgdbAwSAfzT"     // the secret key generated from firebase
+#define WIFI_SSID "MAKERSPACE"                             // input your home or public wifi name
+#define WIFI_PASSWORD "12345678"                     // password of wifi ssid
+ 
+#include <Adafruit_BME280.h>
+#include <Adafruit_Sensor.h>
+#define SEALEVELPRESSURE_HPA (1013.25)
+String tempString = "";                                // temp status received from firebase
+String pressString = "";
+String altitString = "";                              
+String humiString = "";
+//DECLARE STRINGS THAT WILL GO TO FIREBASE
+ 
+Adafruit_BME280 bme;
+ 
+ 
+ 
+ 
+ 
+//Define FirebaseESP32 data object
+FirebaseData firebaseData;
+ 
+ 
+ 
+ 
+void setup() {
+Serial.begin(115200);
+ 
+ if (!bme.begin(0x76)) {
+   Serial.println("Could not find a valid BME280 sensor, check wiring!");
+   while (1);
+ }
+  delay(1000);
+ WiFi.begin(WIFI_SSID, WIFI_PASSWORD);                 // try to connect with wifi
+ 
+ Serial.print("Connecting to ");
+ Serial.print(WIFI_SSID);
+ while (WiFi.status() != WL_CONNECTED) {
+   Serial.print(".");
+   delay(500);
+ }
+ 
+ Serial.println();
+ Serial.print("Connected to ");
+ Serial.println(WIFI_SSID);
+ Serial.print("IP Address is : ");
+ Serial.println(WiFi.localIP());                        // print local IP address
+ Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);          // connect to firebase
+ Firebase.reconnectWiFi(true);
+ Firebase.set(firebaseData, "/TEMPERATURE", "0");      // set initial string of "OFF"
+ Firebase.set(firebaseData, "/PRESSURE", "0");      // set initial string of "OFF"
+ Firebase.set(firebaseData, "/ALTITUDE", "0");      // set initial string of "O
+ Firebase.set(firebaseData, "/HUMIDITY", "0");      // set initial string of "O
+ 
+ 
+ //DECLARE STARTING VARIABLE AND VALUE
+}
+String lasttemperature = "";
+String lastpressure = "";
+String lastaltitude = "";
+String lasthumidity = "";
+ 
+ 
+ 
+void loop() {
+ 
+ 
+String temperature = String(bme.readTemperature());
+String pressure = String(bme.readPressure() / 100.0F);
+String altitude = String(bme.readAltitude(SEALEVELPRESSURE_HPA));
+String humidity = String(bme.readHumidity());
+ 
+ 
+//  lasttemperature = temperature;
+//  lastpressure = pressure;
+//  lastaltitude = altitude;
+//  lasthumidity = humidity;
+//   delay(500);
+  Firebase.get(firebaseData, "/TEMPERATURE");             // get led status input from firebase
+ tempString = firebaseData.stringData();                // change to e.g. intData() or boolData()
+ Serial.println(tempString);
+ Firebase.set(firebaseData, "/TEMPERATURE", temperature);
+ Serial.println(temperature);
+ 
+ Firebase.get(firebaseData, "/PRESSURE");             // get led status input from firebase
+ pressString = firebaseData.stringData();                // change to e.g. intData() or boolData()
+ Serial.println(pressString);
+ Firebase.set(firebaseData, "/PRESSURE", pressure);
+ Serial.println(pressure);
+ 
+ Firebase.get(firebaseData, "/ALTITUDE");             // get led status input from firebase
+ altitString = firebaseData.stringData();                // change to e.g. intData() or boolData()
+ Serial.println(altitString);
+ Firebase.set(firebaseData, "/ALTITUDE", altitude);
+ Serial.println(altitude);
+ 
+ Firebase.get(firebaseData, "/HUMIDITY");             // get led status input from firebase
+ humiString = firebaseData.stringData();                // change to e.g. intData() or boolData()
+ Serial.println(humiString);
+ Firebase.set(firebaseData, "/HUMIDITY", humidity);
+ Serial.println(humidity);
+ 
+ //SEND DATA TO FIREBASE
+ delay(1000);
+}
+
+
+
+
+</code></pre></p>
+</div>
+    </div>
+  </div>
+</div>
+    
+
+
+
+<br>
+<br>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+ <h2>Picture of BME/280 Setup</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <p>This was my first time using firebase. So we started off by hooking up the BME280 to firebase, and writing code to transmit their data to the database. I wasn’t sure how to connect it to the firebase. So I had to do some research on how to use firebase. I ended up following the tutorials on the class website and googling esp32 firebase library. 
+
+The material I use included:
 
 <ul>
-<li>Right click -> Programs -> Open Server Program -> Machines -> Roland mill -> SRM-20 -> mill 2.5D stl </li>
-<li>You should see "socket opened" in the WebSocket device window. The machine should respond to the "move to origin" and "move to home" keys. </li>
-<li>Insert a 1/8" end mill  </li>
-<li>Check units.  </li>
-<li>Select stl file, change settings, and calculate </li>
-<li>Send file to device </li>
-</ul> 
-</p>
-    <!--</div>
+<li>Arduino board </li>
+<li>ESP32 Dev Board </li>
+<li>BME/280 </li>
+<li>WIFI </li>
+<li>Cable cords </li>
+</ul> </p>
+      </div>
     <div class="col-8 text-center">
-      <img class="mx-auto d-block" src="cncf.png" alt="Image of my setup" style="width:500px;height:350px;">
+      <img class="mx-auto d-block" src="ksetup1.png" alt="Image of Ksetup.png" style="width:400px;height:350px;">
     </div>
   </div>
-</div>-->
+</div>
+
+<br>
+<br>
+
 <br>
 <br>
 <br>
 <br>
 <br>
- Unfortunately, I spent several hours debugging and troubleshooting. I tried following the instructions on the website, but I think the CNC machine has a mind of its own. At first my file was not uploaded on the website. I redownload it and it works. When I got the file to work the machine would start cutting funny. You can see an example of this here. 
+
+
+<h2>Picture of Motor & Fan Setup </h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <p> The motor and fan were quite simple to configure for the esp32. Getting the firebase to communicate the right value to the motor was the difficult part. For some reason, rather of sending a real number to the fan, the firebase was transmitting the value of 1.
+
+
+The material I use included:
+
+<ul>
+<li>Arduino </li>
+<li>ESP32 Dev Board </li>
+<li>WIFI </li>
+<li>L9110 </li>
+<li>Motor </li>
+<li>Cable cords </li>
+</ul> </p>
+      </div>
+    <div class="col-8 text-center">
+      <img class="mx-auto d-block" src="winterset1.png" alt="Image of wintersetup" style="width:500px;height:400px;">
+    </div>
+  </div>
+</div>
+
+
+<br>
+<br>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Fan </h2>
+ <img class="mx-auto d-block" src="fanwk91.png" alt="Image of Ksetup.png" style="width:400px;height:350px;">
+<br>
+<br>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!--### How it looked in Fusion 360
+
+<p> <img class="mx-auto d-block" src="88wkj.png" alt="Image of my jordan2" style="width:650px;height:550px;"> -->
+
 
 
 <div class="container">
   <div class="row">
     <div class="col-6">
-     
-
-      <h2>&nbsp;&nbsp;&nbsp;&nbsp;      Attempt 1</h2>
-      <img class="mx-auto d-block" src="joa1.png" alt="Image of my Jordan" style="width:450px;height:350px;">
+      <h2> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It works!! </h2>
+      <p> The temperature was roughly 22 degrees when the video began. To raise the temperature above 30 degrees, we use a hot gun. In the video, the fan starts spinning when the temperature rises above 30 degrees and stops when the temperature falls below 30.
 
       </div>
-    <div class="col-5 text-center">
-       <h2> Attempt 2 </h2>
-       <p> <img class="mx-auto d-block" src="jn3.png" alt="Image of my jordan2" style="width:450px;height:350px;"> 
-
-    </div>
+    <div class="col-6 text-center">
+       <video width="400px" height="400px" controls> 
+  <source src="week9xx.mp4" type="video/mp4"> 
+</video>
+</div>
   </div>
 </div>
 
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-
-<br>
-
-
-
-
-<h2>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Casting</h2>
-I wanted to cast it with mental, but the lab was out. So I used OOMOO 25 silicone to cast a silicone mold from the wax mold. I mixed parts A and B together in a 100A:130B ratio as per the instructions on the bottles. It is important to note that I measured the amounts by weight and not volume. 
-<div class="container">
-
-  <div class="row">
-    <div class="col-6">
-     
-
-      <h2>&nbsp;&nbsp;&nbsp;&nbsp;      Here when i poured it</h2>
-      <img class="mx-auto d-block" src="ss8.png" alt="Image of my Jordan" style="width:400px;height:350px;">
-
-      </div>
-    <div class="col-5 text-center">
-       <h2> Here my result ! </h2>
-       <p> <img class="mx-auto d-block" src="sss8.png" alt="Image of my jordan2" style="width:400px;height:350px;"> 
-
-    </div>
-  </div>
-</div>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<h2> Using the Shopbot: </h2>
-I had so much fun using the Shopbot, and I even got a chance to use the Shopbot Buddy that is downstairs in the basement. I wasn't sure at first what I wanted to make, but I knew it would be unique. Sooo, I decided to build an open book shelf that I could use at home. It was my first time doing something like this, but I wasn't scared. The only thing was, I wasn't sure how to design a level shelf.  
-
-
-  <div class="row">
-    <!-- <div class="col-4">
-      <p><img src="band.gif" alt="this band moves"  width="250" />
-      </ul> </p>
-      </div> -->
-    <div class="col text-center">
-      <img class="mx-auto d-block" src="w8888.png" alt="this band moves" style="width:400px;height:500px;">
-    </div>
-  </div>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;I wasn't sure how to design a level shelf and didnt want to messing up good wood. So I build a prototype. 
-
-
-<div class="container">
-  <div class="row">
-    <div class="col-6">
-     
-
-      
-      <img class="mx-auto d-block" src="po22.png" alt="Image of my Jordan" style="width:450px;height:450px;">
-
-      </div>
-    <div class="col-5 text-center">
-       
-       <p> <img class="mx-auto d-block" src="por88.png" alt="Image of my jordan2" style="width:450px;height:450px;"> 
-
-    </div>
-  </div>
-</div>
-
- 
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-### How it looked in Fusion 360
-
-<p> <img class="mx-auto d-block" src="88wkj.png" alt="Image of my jordan2" style="width:650px;height:550px;"> 
-
-
-
-
 
 
 
