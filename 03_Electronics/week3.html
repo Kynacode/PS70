@@ -148,10 +148,10 @@ For the top of the box/marching machine I created a sketch of in Fusion360. So i
 <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Making the Marching movement / Inside the box <h2> 
  
  I need to find a way to make it appear like someone is marching. So with the help of the class page I was able to find someone who had a similar project as me.  <a href="https://mohammed-mutaher.github.io/PHYSCI-70/04/index4.html"> SimilarProject </a>
-I notice that they use popsicle sticks as a base and chopsticks to hold the butterfly wigs up. So I thought it would be a good idea to use popsicle sticks too. One thing I did differently was I used thinner chopsticks.I use thinner ones because it made it easier for my popsicle to move up and down.
+I notice that they use popsicle sticks as a base and chopsticks to hold the butterfly wigs up. So I thought it would be a good idea to use popsicle sticks too. One thing I did differently was I used thinner chopsticks.I use thinner ones because it made it easier for my popsicle to move up and down. After building the box, I use the laser cut machine to cut out 5 circles. Four of the circles were the same size and one was smaller.I use 1 big circle and a small circle on the side of the box.I did that so that I could have something to hold the motor. With the other circle pieces I had left, I glued 1 on the left side of the stick and the other 2  on the right slide of the stick(or the opposite slide of the motor).
 
 
-
+<img src="isbox.png" alt="Image of side in fusion360" style="width:400px;height:300px;"> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<img src="spwk3.png" alt="Image of side in fusion360" style="width:300px;height:300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="circleswk3.png" alt="Image of side in fusion360" style="width:300px;height:400px;">
 
 
 
@@ -164,10 +164,36 @@ I notice that they use popsicle sticks as a base and chopsticks to hold the butt
 
 
 
+<img src="boxcas1.png" alt="Image of side in fusion360" style="width:400px;height:300px;"> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<img src="boxcas2.png" alt="Image of side in fusion360" style="width:300px;height:300px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="boxcas4.png" alt="Image of side in fusion360" style="width:300px;height:400px;">
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;The Code I used <h2>
+<div class="text-sm bg-light" style="height: 500px; overflow-y: auto;border-style: solid;">
+  <p><pre><code class="language-html">
 
-<h2> Code for it  <h2>
-
-
+include  &lt;Servo.h&gt;
+const int A1A = 3;  // define pin 3 for A-1A
+const int A1B = 4;  // define pin 4 for A-1B
+ 
+void setup() {
+ pinMode(A1A, OUTPUT);     // specify these pins as outputs
+ pinMode(A1B, OUTPUT);
+ digitalWrite(A1A, LOW);   // start with the motors off
+ digitalWrite(A1B, LOW);
+}
+ 
+void loop() {
+ // start the motor
+ digitalWrite(A1A, HIGH);  
+ digitalWrite(A1B, LOW);
+ delay(4000);              // allow the motor to run for 4 seconds
+ 
+ // stop the motor
+ digitalWrite(A1A, LOW);   // setting both pins LOW stops the motor
+ digitalWrite(A1B, LOW);   // redundant, but doesn't hurt
+ delay(2000);              // keep the motor off for 2 seconds
+ 
+}
+</code></pre></p>
+</div>
   # The Marching Machine
     
   ##"Matching to the tone"
