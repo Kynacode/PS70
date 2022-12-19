@@ -105,176 +105,52 @@ Here is my code down below.
 <div class="text-sm bg-light" style="height: 500px; overflow-y: auto;border-style: solid;">
   <p><pre><code class="language-html">#include  &lt;Servo.h&gt;
 
-#include <Servo.h> 
+const int stepPin = 13;
+const int dirPin = 12;
 
-class Flasher
-{
-  // Class Member Variables
-  // These are initialized at startup
-  int ledPin;      // the number of the LED pin
-  long OnTime;     // milliseconds of on-time
-  long OffTime;    // milliseconds of off-time
+const int buttonPin = 3;  // the number of the pushbutton pin
+//const int ledPin = 8;    // the number of the LED pin
 
-  // These maintain the current state
-  int ledState;                 // ledState used to set the LED
-  unsigned long previousMillis;   // will store last time LED was updated
-
-  // Constructor - creates a Flasher 
-  // and initializes the member variables and state
-  public:
-  Flasher(int pin, long on, long off)
-  {
-  ledPin = pin;
-  pinMode(ledPin, OUTPUT);     
-    
-  OnTime = on;
-  OffTime = off;
-  
-  ledState = LOW; 
-  previousMillis = 0;
-  }
-
-  void Update()
-  {
-    // check to see if it's time to change the state of the LED
-    unsigned long currentMillis = millis();
-     
-    if((ledState == HIGH) && (currentMillis - previousMillis >= OnTime))
-    {
-      ledState = LOW;  // Turn it off
-      previousMillis = currentMillis;  // Remember the time
-      digitalWrite(ledPin, ledState);  // Update the actual LED
-    }
-    else if ((ledState == LOW) && (currentMillis - previousMillis >= OffTime))
-    {
-      ledState = HIGH;  // turn it on
-      previousMillis = currentMillis;   // Remember the time
-      digitalWrite(ledPin, ledState);   // Update the actual LED
-    }
-  }
-};
-
-
-
-
-
-class Sweeper
-{
-  Servo servo;              // the servo
-  int pos;              // current servo position 
-  int increment;        // increment to move for each interval
-  int  updateInterval;      // interval between updates
-  unsigned long lastUpdate; // last update of position
-
-public: 
-  Sweeper(int interval)
-  {
-    updateInterval = interval;
-    increment = 1;
-  }
-  
-  void Attach(int pin)
-  {
-    servo.attach(pin);
-  }
-  
-  void Detach()
-  {
-    servo.detach();
-  }
-  
-  void Update()
-  {
-    if((millis() - lastUpdate) > updateInterval)  // time to update
-    {
-      lastUpdate = millis();
-      pos += increment;
-      servo.write(pos);
-      Serial.println(pos);
-      if ((pos >= 180) || (pos <= 0)) // end of sweep
-      {
-        // reverse direction
-        increment = -increment;
-      }
-    }
-  }
-};
- 
-//Motor
- 
-class Motor
-{
-int A1A;// = 3;  // define pin 3 for A-1A (PWM Speed)
-int A1B;// = 4;  // define pin 4 for A-1B (direction)
-int motorSpeed;
-int motorDir;
-long updatemotor;
-unsigned long lastUpdate;
-
- public:
-  Motor(int pinSpeed, int pinDir, int speed, int direction, long interval)
-  {
-      A1A = pinSpeed;
-      A1B = pinDir;
-      motorSpeed = speed;
-      motorDir = direction;
-      pinMode(A1A, OUTPUT);     // specify these pins as outputs
-      pinMode(A1B, OUTPUT);
-      analogWrite(A1A, motorSpeed);   // start with the motors off 
-      digitalWrite(A1B, motorDir);
-      updatemotor = interval;
-
-
-
-  }
-  void Update(){
-
-if((millis() - lastUpdate) > updatemotor)  // time to update
-    {
-
-      lastUpdate = millis();
-      if (motorDir == HIGH)
-        {
-          motorDir = LOW;
-      
-        }
-       else{
-         
-         motorDir = HIGH;
-      
-       }
-        digitalWrite(A1B, motorDir);  
-     
-      }
-    }
-};
- 
-
-
-
-Flasher led1(13, 123, 400);
-
-
-Sweeper sweeper1(15);
-
-
-Motor motor1(3,4,150,LOW,1000);
- 
-void setup() 
-{ 
+// variables will change:
+int buttonState = 0;  // variable for reading the pushbutton status
+void setup() {
   Serial.begin(9600);
-  sweeper1.Attach(9);
+  // put your setup code here, to run once:
+  pinMode(stepPin, OUTPUT);
+  pinMode(dirPin, OUTPUT);
 
-} 
- 
- 
-void loop() 
-{ 
-  sweeper1.Update();
-  motor1.Update();
-  led1.Update();
-  
+  digitalWrite(dirPin, LOW);
+  digitalWrite(stepPin, LOW);
+
+  // initialize the LED pin as an output:
+  //pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);
+
 }
+
+void loop() {
+
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+  Serial.println(buttonState);
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {
+    digitalWrite(stepPin, LOW);
+  delay(5);
+  digitalWrite(stepPin, HIGH);
+  delay(5);
+
+    
+  } else { 
+    digitalWrite(stepPin, LOW);
+    digitalWrite(dirPin, LOW);
+  
+    delay(5);
+  }
+
+  
+} 
 
 
 
@@ -288,14 +164,11 @@ void loop()
 
  
     
-  ##"The Marching Machine Circuit"
-  
-         By Shekinah Newson  
-      
+  <h2>"K Jewelry Box"</h2>    
 <video width="500px" height="500px" controls> 
-  <source src="week5vid.mp4" type="video/mp4"> 
+<source src="IMG_6196.mp4" type="video/mp4"> 
 </video> 
-
+By Shekinah Newson 
 </xmp>
 </body> 
   <script src="../strapdown.js"></script>
